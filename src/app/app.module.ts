@@ -9,6 +9,10 @@ import { RecipeListComponent } from './recipes/recipe-list/recipe-list.component
 import { RecipeDetailsComponent } from './recipes/recipe-details/recipe-details.component';
 import { RecipeItemComponent } from './recipes/recipe-list/recipe-item/recipe-item.component';
 import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component';
+import {FormsModule} from "@angular/forms";
+import {CustomDirective} from "./shared/customDirective";
+import { BetterDirectiveDirective } from './shared/better-directive.directive';
+import {DropdownDirective} from "./shared/dropdown.directive";
 
 @NgModule({
   declarations: [
@@ -19,10 +23,14 @@ import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-ed
     RecipeListComponent,
     RecipeDetailsComponent,
     RecipeItemComponent,
-    ShoppingEditComponent
+    ShoppingEditComponent,
+    CustomDirective,
+    BetterDirectiveDirective,
+    DropdownDirective
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
