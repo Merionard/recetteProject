@@ -1,30 +1,44 @@
 import {Recipe} from "./recipe.model";
-import {EventEmitter} from "@angular/core";
+import {EventEmitter, Injectable} from "@angular/core";
 import {Ingredient} from "../shared/ingredient.model";
+import {ShoppingListService} from "../shopping-list/shopping-list.service";
+import {Subject} from "rxjs";
 
+@Injectable()
 export class RecipeService {
   private recipes: Recipe[] = [
-    new Recipe('test recipe',
+    new Recipe(1,'test recipe',
       'this is a test',
       'https://images-na.ssl-images-amazon.com/images/I/81-Wxum3-IL.jpg',
       [
-        new Ingredient('pomme',1),
-        new Ingredient('riz',3)
+        new Ingredient('pomme', 1),
+        new Ingredient('riz', 3)
       ]),
-    new Recipe('Oeuf au plat',
+    new Recipe(2,'Oeuf au plat',
       'juste 2 oeufs',
       'https://resize-elle.ladmedia.fr/rcrop/638,,forcex/img/var/plain_site/storage/images/elle-a-table/les-dossiers-de-la-redaction/dossier-de-la-redac/comment-preparer-un-oeuf-au-plat/90562366-1-fre-FR/20-recettes-d-oeufs-au-plat-a-avoir-goute-au-moins-une-fois-dans-sa-vie.jpg',
       [
-        new Ingredient('banane',1),
-        new Ingredient('patate',5)
+        new Ingredient('banane', 1),
+        new Ingredient('patate', 5)
       ])
   ];
-  eventRecipeEmiter: EventEmitter<Recipe> = new EventEmitter<Recipe>();
+  eventRecipe: Subject<Recipe> = new Subject<Recipe>();
 
-  getRecipes(){
+  constructor(private shoppingListService: ShoppingListService) {
+  }
+
+  getRecipes() {
     return this.recipes.slice();
   }
-  emitRecipeItem(recipe:Recipe){
-    this.eventRecipeEmiter.emit(recipe);
+
+
+  addIngredientFromRecipeToShoppingList(recipe: Recipe | undefined) {
+    if (recipe != undefined) {
+      this.shoppingListService.addIngredientFromRecipe(recipe);
+    }
+  }
+
+  getRecipeById(id: number) {
+    return this.recipes.find(r => r.id === id);
   }
 }

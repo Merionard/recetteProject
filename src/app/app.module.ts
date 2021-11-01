@@ -13,6 +13,20 @@ import {FormsModule} from "@angular/forms";
 import {CustomDirective} from "./shared/customDirective";
 import { BetterDirectiveDirective } from './shared/better-directive.directive';
 import {DropdownDirective} from "./shared/dropdown.directive";
+import {ShoppingListService} from "./shopping-list/shopping-list.service";
+import {RouterModule, Routes} from "@angular/router";
+import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
+import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
+
+const routes: Routes = [
+  {path:'',redirectTo:'/recipes', pathMatch:'full'},
+  {path:'shopping-list',component:ShoppingListComponent},
+  {path:'recipes',component: RecipesComponent,children:[
+      {path:'',component:RecipeStartComponent},
+      {path:'new',component:RecipeEditComponent},
+      {path:':id',component:RecipeDetailsComponent},
+      {path:':id/edit',component:RecipeEditComponent}
+    ]}]
 
 @NgModule({
   declarations: [
@@ -26,13 +40,16 @@ import {DropdownDirective} from "./shared/dropdown.directive";
     ShoppingEditComponent,
     CustomDirective,
     BetterDirectiveDirective,
-    DropdownDirective
+    DropdownDirective,
+    RecipeStartComponent,
+    RecipeEditComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    RouterModule.forRoot(routes)
   ],
-  providers: [],
+  providers: [ShoppingListService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -8,6 +8,4 @@ import {Recipe} from "./recipes/recipe.model";
 })
 export class AppComponent {
 
-  feature = 'recipe';
-
 }
