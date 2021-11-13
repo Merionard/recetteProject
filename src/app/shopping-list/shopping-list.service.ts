@@ -9,6 +9,7 @@ export class ShoppingListService {
     new Ingredient("banane", 2)
   ];
   ingredientEmitter = new Subject<Ingredient[]>();
+  shoppingIngredientSubject = new Subject<number>();
 
   getIngredients() {
     return this.ingredients.slice();
@@ -23,6 +24,20 @@ export class ShoppingListService {
     recipe.ingredients.forEach(i => this.ingredients.push(i));
     //this.ingredients.push(...recipe.ingredients);
     this.ingredientEmitter.next(this.ingredients.slice());
+  }
+
+  getIngredientByIndex(i: number): Ingredient {
+    return this.ingredients[i];
+  }
+
+  updateIngredient(index:number, newIngredient:Ingredient){
+    this.ingredients[index] = newIngredient;
+    this.ingredientEmitter.next(this.ingredients);
+  }
+
+  deleteIngredient(index: number){
+    this.ingredients.splice(index,1);
+    this.ingredientEmitter.next(this.ingredients);
   }
 
 }
